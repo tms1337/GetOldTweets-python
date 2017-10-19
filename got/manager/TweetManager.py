@@ -1,7 +1,17 @@
 import urllib, urllib2, json, re, datetime, sys, cookielib
+
+from pymongo import MongoClient
+
 from .. import models
 from pyquery import PyQuery
 
+
+mongo_host = 'ec2-35-176-249-239.eu-west-2.compute.amazonaws.com'
+mongo_port = 27017
+
+client = MongoClient(mongo_host, mongo_port)
+db = client['historicalData']
+tbl = db['prod_btc_tweets']
 
 class TweetManager:
     def __init__(self):
@@ -63,8 +73,11 @@ class TweetManager:
                 tweet.hashtags = " ".join(re.compile('(#\\w*)').findall(tweet.text))
                 tweet.geo = geo
 
+
                 results.append(tweet)
                 resultsAux.append(tweet)
+
+                db.btc_tweets.insert_one(tweet.to_dict())
 
                 if receiveBuffer and len(resultsAux) >= bufferLength:
                     receiveBuffer(resultsAux)

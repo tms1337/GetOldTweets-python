@@ -5,10 +5,11 @@ if sys.version_info[0] < 3:
 else:
     import got3 as got
 
+since = sys.argv[1]
+until = sys.argv[2]
 
 def main():
-    tweetCriteria = got.manager.TweetCriteria().setQuerySearch('bitcoin').setSince("2017-10-17").setUntil(
-        "2017-10-18")
+    tweetCriteria = got.manager.TweetCriteria().setQuerySearch('bitcoin').setSince(since).setUntil(until)
     tweets = got.manager.TweetManager.getTweets(tweetCriteria)
 
     print(len(tweets))
