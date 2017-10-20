@@ -5,14 +5,31 @@ if sys.version_info[0] < 3:
 else:
     import got3 as got
 
-since = sys.argv[1]
-until = sys.argv[2]
+month = sys.argv[1]
+year = sys.argv[2]
+
+since = int(sys.argv[3])
+until = int(sys.argv[4])
+
+
+def to_digit(i):
+    if i < 10:
+        return '0%d' % i
+    else:
+        return str(i)
+
 
 def main():
-    tweetCriteria = got.manager.TweetCriteria().setQuerySearch('bitcoin').setSince(since).setUntil(until)
-    tweets = got.manager.TweetManager.getTweets(tweetCriteria)
 
-    print(len(tweets))
+    for i in range(since, until):
+
+        since_str = '%s-%s-%d' % (year, month, to_digit(i))
+        until_str = '%s-%s-%d' % (year, month, to_digit(i+1))
+        print('Since %s, until %s' % (since_str, until_str))
+        tweetCriteria = got.manager.TweetCriteria().setQuerySearch('bitcoin').setSince(since_str).setUntil(until_str)
+        tweets = got.manager.TweetManager.getTweets(tweetCriteria)
+    
+        print(len(tweets))
 
     # for t in tweets:
     #     if t.favorites > 0:
