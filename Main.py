@@ -23,12 +23,12 @@ def main():
 
     for i in range(since, until):
 
-        since_str = '%s-%s-%d' % (year, month, to_digit(i))
-        until_str = '%s-%s-%d' % (year, month, to_digit(i+1))
+        since_str = '%s-%s-%s' % (year, month, to_digit(i))
+        until_str = '%s-%s-%s' % (year, month, to_digit(i+1))
         print('Since %s, until %s' % (since_str, until_str))
         tweetCriteria = got.manager.TweetCriteria().setQuerySearch('bitcoin').setSince(since_str).setUntil(until_str)
         tweets = got.manager.TweetManager.getTweets(tweetCriteria)
-    
+
         print(len(tweets))
 
     # for t in tweets:
