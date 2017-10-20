@@ -77,7 +77,7 @@ class TweetManager:
                 results.append(tweet)
                 resultsAux.append(tweet)
 
-                db.prod_btc_tweets.insert_one(tweet.to_dict())
+                db.full_btc_tweets.insert_one(tweet.to_dict())
 
                 if receiveBuffer and len(resultsAux) >= bufferLength:
                     receiveBuffer(resultsAux)
